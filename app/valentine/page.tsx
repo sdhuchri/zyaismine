@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { log } from "@/lib/logger";
 
 function Petal({ dur, delay, left }: { dur: number; delay: number; left: number }) {
   return (
@@ -28,6 +29,7 @@ export default function ValentinePage() {
   const [revealed, setRevealed] = useState(false);
   const [petals, setPetals] = useState<{ id: number; x: number; dur: number; delay: number }[]>([]);
 
+  useEffect(() => { log("valentine.opened"); }, []);
   useEffect(() => {
     setPetals(
       Array.from({ length: 18 }, (_, i) => ({
@@ -108,7 +110,7 @@ export default function ValentinePage() {
             <motion.button
               className="btn-primary"
               style={{ background: "var(--color-rose)" }}
-              onClick={() => setRevealed(true)}
+              onClick={() => { setRevealed(true); log("valentine.revealed"); }}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >

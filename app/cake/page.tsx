@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { log } from "@/lib/logger";
 
 const MESSAGE_LINES = [
   "Zia,",
@@ -257,6 +258,7 @@ function ConfettiBurst() {
 }
 
 export default function CakePage() {
+  useEffect(() => { log("page.visit", "cake"); }, []);
   const [blownCount, setBlownCount] = useState(0);
   const [allBlown, setAllBlown] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -267,8 +269,10 @@ export default function CakePage() {
     if (allBlown) return;
     const next = blownCount + 1;
     setBlownCount(next);
+    log("cake.candle_blown", `${next}/${totalCandles}`);
     if (next >= totalCandles) {
       setAllBlown(true);
+      log("cake.all_blown");
       setShowConfetti(true);
       setTimeout(() => {
         setShowConfetti(false);

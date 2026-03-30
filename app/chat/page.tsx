@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import { log } from "@/lib/logger";
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -25,6 +26,7 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => { log("page.visit", "chat"); }, []);
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
@@ -37,6 +39,7 @@ export default function ChatPage() {
     const newMessages: Message[] = [...messages, { role: "user", content: msg }];
     setMessages(newMessages);
     setLoading(true);
+    log("chat.message", msg.slice(0, 80));
 
     try {
       const res = await fetch("/api/chat", {

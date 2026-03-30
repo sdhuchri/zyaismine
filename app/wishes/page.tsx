@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Heart, Sparkles, Star, Sun, Smile, Coffee } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import { log } from "@/lib/logger";
 
 const wishes = [
   {
@@ -45,6 +46,7 @@ const fadeUp = (delay = 0) => ({
 });
 
 export default function WishesPage() {
+  useEffect(() => { log("wishes.viewed"); }, []);
   const [copied, setCopied] = useState(false);
 
   const personalMessage = `Dear Zya,

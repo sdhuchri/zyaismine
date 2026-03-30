@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import { log } from "@/lib/logger";
 
 type Photo = {
   src: string;
@@ -61,6 +62,7 @@ export default function GalleryPage() {
 
   useEffect(() => {
     setDeck(shuffle(photos).map((p) => ({ ...p, ...randomStyle() })));
+    log("page.visit", "gallery");
   }, []);
 
   const filtered =
@@ -133,7 +135,7 @@ export default function GalleryPage() {
                       zIndex: 20,
                       transition: { duration: 0.2 },
                     }}
-                    onClick={() => setLightbox(photo)}
+                    onClick={() => { setLightbox(photo); log("gallery.photo_viewed", photo.caption); }}
                   >
                     {/* Polaroid frame */}
                     <div

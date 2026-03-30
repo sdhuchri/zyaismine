@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Copy, Check, RotateCcw } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import { log } from "@/lib/logger";
 
 const moods = [
   { label: "Missing you", value: "missing you, longing" },
@@ -24,6 +25,7 @@ const loadingMessages = [
 type State = "form" | "loading" | "result";
 
 export default function LetterPage() {
+  useEffect(() => { log("page.visit", "letter"); }, []);
   const [state, setState] = useState<State>("form");
   const [selectedMood, setSelectedMood] = useState("");
   const [context, setContext] = useState("");
@@ -49,6 +51,7 @@ export default function LetterPage() {
       const data = await res.json();
       setLetter(data.letter);
       setState("result");
+      log("letter.generated", selectedMood);
     } catch {
       setLetter(
         `Zya,\n\nHappy birthday. Genuinely.\n\nAku tau kamu probably lagi "yaudah biasa aja" soal ulang tahun ini, tapi buat aku ini penting — kamu penting.\n\nSemoga tahun ini baik sama kamu. Dan kamu baik sama diri kamu sendiri.\n\nMiss u.\n\n— Sury`
@@ -63,6 +66,7 @@ export default function LetterPage() {
     navigator.clipboard.writeText(letter);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+    log("letter.copied");
   };
 
   const reset = () => {

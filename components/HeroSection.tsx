@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import Link from "next/link";
+import { log } from "@/lib/logger";
 
 function Confetti() {
   const [pieces, setPieces] = useState<
@@ -45,6 +46,8 @@ function Confetti() {
 }
 
 export default function HeroSection() {
+  useEffect(() => { log("page.visit", "home"); }, []);
+
   const fadeUp = (delay = 0) => ({
     initial: { opacity: 0, y: 24 },
     animate: { opacity: 1, y: 0 },
