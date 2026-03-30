@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//d/tasyacleo/frontend/src/components/**)",
+      "Read(//d/tasyacleo/frontend/src/app/chat/**)",
+      "Read(//d/tasyacleo/frontend/src/app/gallery/**)",
+      "Read(//d/tasyacleo/frontend/src/app/letter/**)"
+    ]
+  }
+}
