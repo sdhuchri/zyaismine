@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const getClient = () => new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const SYSTEM_PROMPT = `You are a warm, caring AI companion created especially for Zya's birthday. You know a lot about her and the person who made this site for her (Suryana / sryndhcrs).
 
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
     { role: "user", content: message },
   ];
 
-  const res = await client.chat.completions.create({
+  const res = await getClient().chat.completions.create({
     model: "gpt-4o-mini",
     messages,
     max_tokens: 200,

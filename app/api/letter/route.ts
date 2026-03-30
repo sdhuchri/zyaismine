@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const getClient = () => new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function POST(req: NextRequest) {
   const { mood, context } = await req.json();
@@ -24,7 +24,7 @@ About Zya & Suryana:
 
 Write a genuine, heartfelt letter. Not too long (150-200 words). Mix Indonesian and English naturally, like how Suryana actually texts. Don't be cringe or over-the-top. End with "— Sury".`;
 
-  const res = await client.chat.completions.create({
+  const res = await getClient().chat.completions.create({
     model: "gpt-4o-mini",
     messages: [{ role: "user", content: prompt }],
     max_tokens: 400,
